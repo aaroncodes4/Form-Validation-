@@ -1,23 +1,59 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react';
 
 function App() {
+
+  const [values, setValues] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+  })
+
+  const handleFirstName = (event) => {
+    setValues({...values, firstName: event.target.value})
+  }
+  const handleLastName = (event) => {
+    setValues({...values, lastName: event.target.value})
+  }
+  const handleEmail = (event) => {
+    setValues({...values, email: event.target.value})
+  }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    setSubmitted(true);
+  }
+
+const [submitted, setSubmitted] = useState(false)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className='container' onSubmit={handleSubmit}>
+        <h1>Form Validation</h1>
+        <input value={values.firstName} 
+        onChange={handleFirstName}
+          className='form-field' type='text' 
+          placeholder='First Name' required>
+
+        </input>
+        {submitted && !values.firstName ? <span>Fill this field!</span> : null}
+
+        <input value={values.lastName} 
+          onChange={handleLastName}
+          className='form-field' type='text' 
+          placeholder='Last Name' required>
+        </input>
+        {submitted && !values.lastName ? <span>Fill this field!</span> : null}
+
+        <input value={values.email} 
+          onChange={handleEmail}
+          className='form-field' type='email' 
+          placeholder='Email' required>
+
+        </input>
+        {submitted && !values.email ? <span>Fill this field!</span> : null}
+        <button>Register</button>
+      </div>
     </div>
   );
 }
